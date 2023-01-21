@@ -17,7 +17,7 @@ class CreateImagesTable extends Migration
             $table->id();
             $table->foreignId('postID');
             $table->string('url');
-            $table->string('url');
+            $table->string('path');
         });
     }
 

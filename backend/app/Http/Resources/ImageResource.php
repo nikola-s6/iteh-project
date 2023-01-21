@@ -21,7 +21,7 @@ class ImageResource extends JsonResource
             'id' => $this->resource->id,
             'url' => $this->resource->url,
             'path' => $this->resource->path,
-            'postID' => new PostSimpleResource($this->resource->post),
+            'post' => new PostSimpleResource($this->resource->post),
         ];
     }
 }

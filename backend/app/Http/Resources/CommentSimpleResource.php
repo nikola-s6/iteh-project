@@ -21,7 +21,7 @@ class CommentSimpleResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'body' => $this->resource->body,
-            'userID' => new UserSimpleResource($this->resource->commenter),
+            'user' => new UserSimpleResource($this->resource->commenter),
         ];
     }
 }

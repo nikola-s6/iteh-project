@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Post;
+use App\Http\Resources\PostSimpleResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource

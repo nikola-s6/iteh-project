@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\UserSimpleResource;
+use App\Http\Resources\PostSimpleResource;
 
 class CommentResource extends JsonResource
 {
@@ -23,7 +25,7 @@ class CommentResource extends JsonResource
             'id' => $this->resource->id,
             'body' => $this->resource->body,
             'user' => new UserSimpleResource($this->resource->commenter),
-            'post' => new PostSimpleReosurce($this->resource->post),
+            'post' => new PostSimpleResource($this->resource->post),
             'created_at' => $this->resource->created_at,
             'updated_at' => $this->resource->updated_at
         ];

@@ -6,6 +6,7 @@ use App\Http\Resources\PostResource;
 use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
@@ -39,7 +40,8 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'body' => 'required|string'
+            'body' => 'required|string',
+            'image' => 'image'
         ]);
 
         if ($validator->fails()) {
@@ -49,18 +51,17 @@ class PostController extends Controller
         $post = Post::create(['userID' => auth()->user()->id, 'body' => $request->body]);
 
         //proveriti
-        if (!$request->imageID) {
+        if ($request->hasFile('image')) {
+            if (is_null($request->file('image'))) {
+                return response()->json(['message' => 'new post added', 'post' => new PostResource($post)], 200);
+            }
+            $path = $request->file('image')->store('/../../../../public/images');
+            $url = Storage::url($path);
+            $image = Image::create(['postID' => $post->id, 'url' => $url, 'path' => $path]);
+            $post->imageID = $image->id;
+        } else {
             return response()->json(['message' => 'new post added', 'post' => new PostResource($post)], 200);
         }
-
-        $image = Image::find($request->imageID);
-
-        if (!$image) {
-            return response()->json(['message' => 'image not found'], 404);
-        }
-
-        $image->imageID = $image->id;
-
         return response()->json(['message' => 'new post added', 'post' => new PostResource($post)], 200);
     }
 

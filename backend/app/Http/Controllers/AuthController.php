@@ -36,19 +36,19 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if (!Auth::attempt($request->only('username', 'password'))) {
-            return response()->json(["Login_failed" => "Unauthorized"], 401);
+            return response()->json(["message" => "unauthorized"], 401);
         }
 
         $user = User::where('username', $request['username'])->firstOrFail();
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json(['Message' => $user->username . ', you have successfully logged in!', 'access_token' => $token, 'token_type' => 'Bearer'], 200);
+        return response()->json(['message' => $user->username . ', you have successfully logged in', 'access_token' => $token, 'token_type' => 'Bearer'], 200);
     }
 
     public function logout()
     {
         auth()->user()->tokens()->delete();
-        return response()->json(['Message' => 'You have successfully loged out!'], 200);
+        return response()->json(['message' => 'you have successfully loged out'], 200);
     }
 }

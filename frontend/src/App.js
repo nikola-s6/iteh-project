@@ -1,17 +1,7 @@
-import { Login } from "./pages/LoginPage/Login"
-import { Register } from "./pages/LoginPage/Register"
-import React, { useState } from "react"
+import Home from "./pages/Home/Home"
 
 function App() {
-  const [currentForm, setCurrentForm] = useState("login")
-
-  const toggleForm = (formName) => {
-    setCurrentForm(formName)
-  }
-
-  return (
-    <div>{currentForm === "login" ? <Login onFormSwitch={toggleForm} /> : <Register onFormSwitch={toggleForm} />}</div>
-  )
+  return <Home />
 }
 
 export default App

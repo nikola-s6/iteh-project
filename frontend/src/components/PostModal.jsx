@@ -1,9 +1,10 @@
-import { React, useState } from "react"
+import { React, useState, useEffect } from "react"
 import { Avatar, Button, Card } from "antd"
 import "./Post.css"
 import CommentList from "./CommentList"
+import axios from "axios"
 
-const PostModal = ({ avatar, title, description }) => {
+const PostModal = ({ post }) => {
   const [comment, setComment] = useState("")
 
   const handleSubmit = (e) => {
@@ -11,39 +12,44 @@ const PostModal = ({ avatar, title, description }) => {
     // handle submit
     setComment("")
   }
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      name: "Name1",
-      text: "Comment 1",
-      date: "Jan 21, 2022",
-    },
-    {
-      id: 2,
-      name: "Name2",
-      text: "Comment 2",
-      date: "Jan 21, 2022",
-    },
-    {
-      id: 3,
-      name: "Name3",
-      text: "Comment 3",
-      date: "Jan 21, 2022",
-    },
-  ])
+  const [comments, setComments] = useState([])
+
+  useEffect(() => {
+    async function fetchData() {
+      console.log("usao")
+      var config = {
+        method: "get",
+        url: `http://127.0.0.1:8000/api/post/${post.id}/comments`,
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("auth_key"),
+        },
+      }
+      await axios(config)
+        .then(function (response) {
+          if (response.status == 200) {
+            setComments(response.data.data)
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+      fetchData()
+    }
+  }, [comments])
+
   return (
     <div className="postModal">
       <div style={{ display: "block", width: "70%" }}>
         <div style={{ display: "flex", gap: "30px" }}>
-          <Card.Meta avatar={<Avatar src={avatar} />} />
-          {title}
+          <Card.Meta avatar={<Avatar src={sessionStorage.getItem("user_image")} />} />
+          {post.user.username}
         </div>
         <br />
-        <div className="text">{description}</div>
+        <div className="text">{post.body}</div>
       </div>
       <div style={{ borderLeft: "1px solid black", height: "100%" }} />
       <div className="comments">
-        <CommentList comments={comments} avatar={avatar} />
+        <CommentList comments={comments} avatar={sessionStorage.getItem("user_image")} />
         <div className="inputComment">
           <textarea
             value={comment}

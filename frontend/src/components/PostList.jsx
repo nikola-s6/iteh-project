@@ -1,7 +1,7 @@
 import React from "react"
 import Post from "./Post"
 
-function PostList({ posts, showDelete }) {
+function PostList({ posts }) {
   function isUserPost(postCreator, userId) {
     if (postCreator == userId) return true
     return false
@@ -12,17 +12,7 @@ function PostList({ posts, showDelete }) {
       <div className="container">
         <div className="postlist-content grid">
           {posts.map((item) => {
-            return (
-              <Post
-                created_at={item.created_at}
-                avatar={sessionStorage.getItem("profile_image")}
-                username={item.username}
-                caption={item.body}
-                showDelete={showDelete}
-                isUserPost={isUserPost}
-                key={item.id}
-              />
-            )
+            return <Post post={item} key={item.id} />
           })}
         </div>
       </div>

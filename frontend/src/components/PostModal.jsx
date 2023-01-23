@@ -11,7 +11,7 @@ const PostModal = ({ avatar, title, description }) => {
     // handle submit
     setComment("")
   }
-  const comments = [
+  const [comments, setComments] = useState([
     {
       id: 1,
       name: "Name1",
@@ -30,7 +30,7 @@ const PostModal = ({ avatar, title, description }) => {
       text: "Comment 3",
       date: "Jan 21, 2022",
     },
-  ]
+  ])
   return (
     <div className="postModal">
       <div style={{ display: "block", width: "70%" }}>
@@ -53,7 +53,9 @@ const PostModal = ({ avatar, title, description }) => {
             style={{ width: "100%" }}
           />
           <br />
-          <button className="button">Publish</button>
+          <button onClick={handleSubmit} className="button">
+            Publish
+          </button>
         </div>
       </div>
     </div>

@@ -13,12 +13,22 @@ library.add(faHeartRegular, faHeartSolid)
 const Post = (props, isUserPost) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [liked, setLiked] = useState(false)
+  const [likeNum, setLikeNum] = useState(0)
+  const [commentNum, setCommentNum] = useState(0)
 
   const deleteButton = () => {
     if (isUserPost(props.id, sessionStorage)) {
-      return <Button type="link" icon={<DeleteOutlined />} />
+      return <Button style={{ marginTop: "8px" }} type="link" icon={<DeleteOutlined />} />
     } else {
       return <></>
+    }
+  }
+
+  function handleLike() {
+    setLiked(!liked)
+    if (liked) setLikeNum(likeNum - 1)
+    else {
+      setLikeNum(likeNum + 1)
     }
   }
 
@@ -26,9 +36,20 @@ const Post = (props, isUserPost) => {
     <Card
       style={{ width: "100%", marginBottom: "16px", border: "solid" }}
       actions={[
-        <FontAwesomeIcon onClick={() => setLiked(!liked)} icon={liked ? faHeartSolid : faHeartRegular} />,
-        <MessageOutlined key="message" onClick={() => setModalOpen(true)} />,
-        //  deleteButton(),
+        <div
+          onClick={handleLike}
+          style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "5px" }}
+        >
+          <FontAwesomeIcon color="red" icon={liked ? faHeartSolid : faHeartRegular} />
+          <p>{likeNum} likes</p>
+        </div>,
+        <div
+          onClick={() => setModalOpen(true)}
+          style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "5px" }}
+        >
+          <MessageOutlined key="message" />,<p>{commentNum} comments</p>
+        </div>,
+        //deleteButton()
       ]}
     >
       <Modal

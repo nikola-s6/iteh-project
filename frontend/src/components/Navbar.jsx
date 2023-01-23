@@ -1,5 +1,6 @@
 import "./Navbar.css"
 import { React, useState } from "react"
+import { Link } from "react-router-dom"
 
 function Navbar({}) {
   return (
@@ -10,20 +11,20 @@ function Navbar({}) {
           <img className="navbar__logo_image_small" src="../../public/images/instagram-pic.png" alt="site logo small" />
         </picture>
 
-        <a className="navbar__menu_option" href="#">
+        <Link className="navbar__menu_option" to={"/"}>
           <svg width="24" height="24" viewBox="0 0 24 24">
             <path d="M3 10v11h6v-7h6v7h6v-11L12,3z" />
           </svg>
           <p className="navbar__tab_name">Home</p>
-        </a>
+        </Link>
 
-        <a className="navbar__menu_option navbar__profile_icon" href="#">
+        <Link className="navbar__menu_option navbar__profile_icon" to={"/profile"}>
           <svg width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="8" r="5" />
             <path d="M3,21 h18 C 21,12 3,12 3,21" />
           </svg>
           <p className="navbar__tab_name">Profile</p>
-        </a>
+        </Link>
       </div>
       <div className="navbar__menu_search_wrapper">
         <a className="navbar__menu_option" href="#">

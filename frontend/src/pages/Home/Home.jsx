@@ -9,7 +9,6 @@ function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      console.log("usao")
       const response = await getPosts()
       setPosts(response.data.data)
       console.log(response.data.data)

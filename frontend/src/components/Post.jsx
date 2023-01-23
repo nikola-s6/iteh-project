@@ -10,14 +10,14 @@ import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons"
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons"
 library.add(faHeartRegular, faHeartSolid)
 
-const Post = (props, isUserPost) => {
+const Post = (props) => {
   const [modalOpen, setModalOpen] = useState(false)
   const [liked, setLiked] = useState(false)
   const [likeNum, setLikeNum] = useState(0)
   const [commentNum, setCommentNum] = useState(0)
 
   const deleteButton = () => {
-    if (isUserPost(props.id, sessionStorage)) {
+    if (props.isUserPost(props.id, sessionStorage)) {
       return <Button style={{ marginTop: "8px" }} type="link" icon={<DeleteOutlined />} />
     } else {
       return <></>
@@ -49,7 +49,7 @@ const Post = (props, isUserPost) => {
         >
           <MessageOutlined key="message" />,<p>{commentNum} comments</p>
         </div>,
-        //deleteButton()
+        // deleteButton()
       ]}
     >
       <Modal

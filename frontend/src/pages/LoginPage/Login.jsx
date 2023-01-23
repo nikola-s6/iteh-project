@@ -35,7 +35,10 @@ const Login = (props) => {
           let tokenParts = bigToken.split("|")
           let token = tokenParts[1]
           sessionStorage.setItem("auth_key", token)
+          console.log(token)
           sessionStorage.setItem("logged_user", JSON.stringify(response.data.user))
+          let profilePictureAPI = "https://api.multiavatar.com/" + response.data.user["username"]
+          sessionStorage.setItem("profile_image", profilePictureAPI)
           navigate("/")
         }
       })

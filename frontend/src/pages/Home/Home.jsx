@@ -25,7 +25,7 @@ function Home() {
     </div>
   )
 }
-/*
+
 async function getPosts() {
   var config = {
     method: "get",

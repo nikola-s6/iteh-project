@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 const Register = (props) => {
   const [email, setEmail] = useState("")
   const [pass, setPass] = useState("")
+  const [passCheck, setPassCheck] = useState("")
   const [name, setName] = useState("")
   const [userName, setUserName] = useState("")
   let navigate = useNavigate()
@@ -51,6 +52,15 @@ const Register = (props) => {
           <input
             value={pass}
             onChange={(e) => setPass(e.target.value)}
+            type="password"
+            placeholder="********"
+            id="password"
+            name="password"
+          />
+          <label htmlFor="password_check">Repeat password</label>
+          <input
+            value={passCheck}
+            onChange={(e) => setPassCheck(e.target.value)}
             type="password"
             placeholder="********"
             id="password"

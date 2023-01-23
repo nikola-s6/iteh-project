@@ -5,8 +5,8 @@ import PostList from "../../components/PostList"
 import axios from "axios"
 
 function Home() {
-  const [posts, setPosts] = useState({})
-
+  const [posts, setPosts] = useState()
+  /*
   useEffect(() => {
     async function fetchData() {
       const results = await getPosts()
@@ -14,14 +14,14 @@ function Home() {
     }
     fetchData()
   }, [])
-
+*/
   return (
     <div className="posts">
       <PostList posts={posts} showDelete={false} />
     </div>
   )
 }
-
+/*
 async function getPosts() {
   var config = {
     method: "get",
@@ -38,6 +38,6 @@ async function getPosts() {
     .catch(function (error) {
       console.log(error)
     })
-}
+}*/
 
 export default Home

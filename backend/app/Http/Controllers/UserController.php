@@ -15,7 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all()->sortBy('id');
+        $users = User::all()->sortBy('id');
+        return UserResource::collection($users);
     }
 
     /**

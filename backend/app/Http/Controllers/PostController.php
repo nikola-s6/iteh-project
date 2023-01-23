@@ -18,7 +18,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return PostResource::collection(Post::all()->sortByDesc('created_at'));
+        $posts = Post::all()->sortByDesc('created_at');
+        return PostResource::collection($posts);
     }
 
     /**
@@ -39,15 +40,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // return response()->json($request);
         $validator = Validator::make($request->all(), [
             'body' => 'required|string',
             'image' => 'image'
         ]);
 
+
         if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-
         $post = Post::create(['userID' => auth()->user()->id, 'body' => $request->body]);
 
         //proveriti
@@ -55,10 +57,11 @@ class PostController extends Controller
             if (is_null($request->file('image'))) {
                 return response()->json(['message' => 'new post added', 'post' => new PostResource($post)], 200);
             }
-            $path = $request->file('image')->store('/../../../../public/images');
+            $path = $request->file('image')->store('/public/images');
             $url = Storage::url($path);
             $image = Image::create(['postID' => $post->id, 'url' => $url, 'path' => $path]);
             $post->imageID = $image->id;
+            $post->save();
         } else {
             return response()->json(['message' => 'new post added', 'post' => new PostResource($post)], 200);
         }
@@ -71,9 +74,9 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($post_id)
+    public function show($postID)
     {
-        $post = Post::find($post_id);
+        $post = Post::find($postID);
         if (is_null($post)) {
             return response()->json(['message' => 'post not found'], 404);
         }
@@ -109,9 +112,9 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($post_id)
+    public function destroy($postID)
     {
-        $post = Post::find($post_id);
+        $post = Post::find($postID);
         if (is_null($post)) {
             return response()->json(['message' => 'post not found'], 404);
         }

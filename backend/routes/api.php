@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostCommentController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostImageController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\UserController;
@@ -30,6 +31,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::resource('/user', UserController::class)->only('index', 'show');
+    Route::resource('/post', PostController::class)->only('index', 'show', 'store', 'destroy');
     Route::resource('post.comments', PostCommentController::class)->only('index', 'show', 'store', 'update', 'destroy');
     Route::resource('post.likes', PostLikeController::class)->only('index', 'store', 'destroy');
     Route::resource('post.image', PostImageController::class)->only('show');

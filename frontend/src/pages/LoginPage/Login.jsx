@@ -1,16 +1,45 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
 
 import "./Login.css"
 
 const Login = (props) => {
-  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
   const [pass, setPass] = useState("")
   let navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     //handle submit
+    let data = new FormData()
+    data.append("username", username)
+    data.append("password", pass)
+
+    var config = {
+      method: "post",
+      url: "http://127.0.0.1:8000/api/login",
+      // headers: {
+      //   ...data.getHeaders(),
+      // },
+      data: data,
+    }
+
+    await axios(config)
+      .then(function (response) {
+        console.log(response.status)
+        console.log(response.data)
+        console.log(response.data.user)
+        if (response.status === 200) {
+          sessionStorage.setItem("auth_key", response.data.access_token)
+          sessionStorage.setItem("logged_user", JSON.stringify(response.data.user))
+          navigate("/")
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+        alert(error.message)
+      })
   }
 
   function changePageToRegister() {
@@ -24,16 +53,14 @@ const Login = (props) => {
         <form className="login-form" onSubmit={handleSubmit}>
           <label htmlFor="email">Email</label>
           <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
+            onChange={(e) => setUsername(e.target.value)}
+            type="text"
             placeholder="someone@gmail.com"
             id="email"
             name="email"
           />
           <label htmlFor="password">Password</label>
           <input
-            value={pass}
             onChange={(e) => setPass(e.target.value)}
             type="password"
             placeholder="********"

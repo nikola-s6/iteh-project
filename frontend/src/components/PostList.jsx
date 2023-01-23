@@ -11,15 +11,17 @@ function PostList({ posts, showDelete }) {
     <section className="postlist">
       <div className="container">
         <div className="postlist-content grid">
-          {posts.map((item, index) => {
+          {posts.map((item) => {
+            let avatar = `https://api.multiavatar.com/${item.username}`
             return (
               <Post
                 created_at="12-03-2000"
-                avatar={item.avatar}
+                avatar={avatar}
                 username={item.username}
-                caption={item.caption}
+                caption={item.body}
                 showDelete={showDelete}
                 isUserPost={isUserPost}
+                key={item.id}
               />
             )
           })}

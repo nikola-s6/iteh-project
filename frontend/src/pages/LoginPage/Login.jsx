@@ -31,7 +31,10 @@ const Login = (props) => {
         console.log(response.data)
         console.log(response.data.user)
         if (response.status === 200) {
-          sessionStorage.setItem("auth_key", response.data.access_token)
+          let bigToken = response.data.access_token
+          let tokenParts = bigToken.split("|")
+          let token = tokenParts[1]
+          sessionStorage.setItem("auth_key", token)
           sessionStorage.setItem("logged_user", JSON.stringify(response.data.user))
           navigate("/")
         }

@@ -5,19 +5,27 @@ import PostList from "../../components/PostList"
 import axios from "axios"
 
 function Home() {
-  const [posts, setPosts] = useState({})
+  const [posts, setPosts] = useState([])
 
   useEffect(() => {
     async function fetchData() {
-      const results = await getPosts()
-      setPosts(results)
+      console.log("usao")
+      const response = await getPosts()
+      setPosts(response.data.data)
+      console.log(response.data.data)
     }
     fetchData()
   }, [])
 
+  if (posts.length == 0) {
+    return <h1>Ucitavanje</h1>
+  }
+
   return (
     <div className="posts">
       <PostList posts={posts} showDelete={false} />
+
+      {/* <h1>nesto se desava</h1> */}
     </div>
   )
 }
@@ -27,17 +35,12 @@ async function getPosts() {
     method: "get",
     url: "http://127.0.0.1:8000/api/post",
     headers: {
-      Authorization: "Bearer tiXfpv0k5fsXfyXHVAjNzWyTALCqUw7EKkMofioT",
+      Authorization: "Bearer " + sessionStorage.getItem("auth_key"),
     },
   }
 
-  axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data))
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
+  const response = await axios(config)
+  return response
 }
 
 export default Home

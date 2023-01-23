@@ -10,6 +10,7 @@
     background-color: rgba(163, 229, 190, 0.989);
     padding-top: 0px;
   }
+
   .navbar__menu_option {
     text-decoration: none;
     font-size: 20px;
@@ -23,14 +24,17 @@
     margin-top:5px;
     margin-bottom:10px;
   }
+
  .navbar__logo_image{
     width: 120px;
     padding: 40px 25px;
     display: block;
  }
+
  .navbar__logo_image_small{
     display: none;
  }
+
   .navbar__menu_option:hover {
     color: #fff;
     background-color: rgb(40, 40, 40);
@@ -39,12 +43,15 @@
     transition: 0.6s;
     fill:white;
   }
+
   .navbar__menu_search_input{
     display: none;
   }
+
   .navbar__tab_name{
     margin: 5px;
-}
+  }
+  
   @media screen and (max-width: 800px) {
     .sidebar_wrapper{
         width: 80px;

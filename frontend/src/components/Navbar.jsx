@@ -1,22 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITEH</title>
-    <link rel="stylesheet" href="navbar.css">
+import "./Navbar.css"
 
-</head>
-<body>
-    <div class="sidebar_wrapper">
+function Navbar({}) {
+    return (
+        <div class="sidebar_wrapper">
         <div class="navbar__menu_icons">
             <picture>
-                <img class="navbar__logo_image" src="../../images/logo.png" alt="site logo">
-                <img class="navbar__logo_image_small" src="../../images/instagram-pic.png" alt="site logo small">
+                <img class="navbar__logo_image" src="../images/logo.png" alt="site logo"/>
+                <img class="navbar__logo_image_small" src="../images/instagram-pic.png" alt="site logo small"/>
             </picture>
             
-            <a class="navbar__menu_option" class="active" href="#">
+            <a class="navbar__menu_option" href="#">
                 <svg 
                     width="24" 
                     height="24" 
@@ -56,8 +49,10 @@
                 </svg>
                 <p class="navbar__tab_name">Search</p>
             </a>
-            <input class="navbar__menu_search_input" type="text" placeholder="Search...">
+            <input class="navbar__menu_search_input" type="text" placeholder="Search..."/>
         </div>
     </div>
-</body>
-</html>
+    )
+  }
+  
+  export default Navbar

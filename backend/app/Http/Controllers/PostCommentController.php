@@ -45,7 +45,7 @@ class PostCommentController extends Controller
         if (is_null($comment)) {
             return response()->json(['message' => 'comment not found'], 404);
         }
-        if (!($comment->user_id === auth()->user()->id)) {
+        if (!($comment->userID === auth()->user()->id)) {
             return response()->json(['message' => 'only author can edit a comment'], 403);
         }
         $comment->update(['text' => $request->text]);
@@ -72,7 +72,7 @@ class PostCommentController extends Controller
         if (is_null($comment)) {
             return response()->json(["message" => "comment not found!"], 404);
         }
-        if (!($comment->user_id === auth()->user()->id)) {
+        if (!($comment->userID === auth()->user()->id)) {
             return response()->json(['message' => 'only author can delete a comment'], 403);
         }
         $comment->delete();

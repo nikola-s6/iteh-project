@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 import "./Login.css"
 
-export const Login = (props) => {
+const Login = (props) => {
   const [email, setEmail] = useState("")
   const [pass, setPass] = useState("")
+  let navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     //handle submit
+  }
+
+  function changePageToRegister() {
+    navigate("/register")
   }
 
   return (
@@ -36,10 +42,12 @@ export const Login = (props) => {
           />
           <button type="submit">Log In</button>
         </form>
-        <button className="link-btn" onClick={() => props.onFormSwitch("register")}>
+        <button className="link-btn" onClick={changePageToRegister}>
           Don't have an account? Register here.
         </button>
       </div>
     </div>
   )
 }
+
+export default Login

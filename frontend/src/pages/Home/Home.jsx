@@ -5,7 +5,7 @@ import PostList from "../../components/PostList"
 import axios from "axios"
 
 function Home() {
-  const [posts, setPosts] = useState({})
+  const [posts, setPosts] = useState([])
 
   useEffect(() => {
     async function fetchData() {
@@ -17,11 +17,13 @@ function Home() {
     fetchData()
   }, [])
 
+  if (posts.length == 0) {
+    return <h1>Ucitavanje</h1>
+  }
+
   return (
     <div className="posts">
       <PostList posts={posts} showDelete={false} />
-
-      {/* <h1>nesto se desava</h1> */}
     </div>
   )
 }
@@ -35,13 +37,8 @@ async function getPosts() {
     },
   }
 
-  axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data))
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
+  const response = await axios(config)
+  return response
 }
 
 export default Home

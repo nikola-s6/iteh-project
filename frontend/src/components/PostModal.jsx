@@ -4,10 +4,12 @@ import "./Post.css"
 import CommentList from "./CommentList"
 
 const PostModal = ({ avatar, title, description }) => {
-  const [inputValue, setInputValue] = useState("")
+  const [comment, setComment] = useState("")
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value)
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // handle submit
+    setComment("")
   }
   const comments = [
     {
@@ -31,20 +33,25 @@ const PostModal = ({ avatar, title, description }) => {
   ]
   return (
     <div className="postModal">
-      <div className="text">{description}</div>
+      <div style={{ display: "block", width: "70%" }}>
+        <div style={{ display: "flex", gap: "30px" }}>
+          <Card.Meta avatar={<Avatar src={avatar} />} />
+          {title}
+        </div>
+        <br />
+        <div className="text">{description}</div>
+      </div>
       <div style={{ borderLeft: "1px solid black", height: "100%" }} />
       <div className="comments">
         <CommentList comments={comments} avatar={avatar} />
-        <div className="inputComment" style={{ position: "fixed" }}>
-          <input
-            className="input"
-            value={inputValue}
-            type="text"
-            placeholder="Add your comment"
-            onChange={handleInputChange}
-            style={{ width: "80%", border: "none" }}
+        <div className="inputComment">
+          <textarea
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="Add a comment..."
+            rows={3}
+            style={{ width: "100%" }}
           />
-          <br />
           <br />
           <button className="button">Publish</button>
         </div>

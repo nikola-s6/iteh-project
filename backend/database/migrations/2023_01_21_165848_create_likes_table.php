@@ -17,6 +17,7 @@ class CreateLikesTable extends Migration
             $table->id();
             $table->foreignId('postID');
             $table->foreignId('userID');
+            $table->timestamps();
         });
     }
 

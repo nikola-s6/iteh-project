@@ -121,7 +121,14 @@ class PostController extends Controller
         if (!($post->userID === auth()->user()->id)) {
             return response()->json(['message' => 'only author can delete post'], 403);
         }
-        $post->delete();
+        if (!is_null($post->imageID)) {
+            $image = Image::get()->where('postID', $post->id);
+            $post->delete();
+            $image->delete();
+        } else {
+            $post->delete();
+        }
+
         return response()->json(['message' => 'post deleted'], 200);
     }
 }

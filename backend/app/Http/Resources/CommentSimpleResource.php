@@ -21,7 +21,7 @@ class CommentSimpleResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->resource->id,
-            'body' => $this->resource->body,
+            'text' => $this->resource->text,
             'user' => new UserSimpleResource($this->resource->commenter),
         ];
     }

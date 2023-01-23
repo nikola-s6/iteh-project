@@ -19,6 +19,9 @@
     color: #222;
     padding: 5px 40px 5px 10px;
     align-items: center;
+    margin-right: 5px; 
+    margin-top:5px;
+    margin-bottom:10px;
   }
  .navbar__logo_image{
     width: 120px;
@@ -34,16 +37,7 @@
     border-radius: 100px;
     width: 100px;
     transition: 0.6s;
-  }
-  .navbar__menu_icon{
-    height:20px;
-    width:20px;
-    margin-right: 10px;
-  }
-  .icon-navbar {
-    margin-right: 5px; 
-    margin-top:5px;
-    margin-bottom:10px;
+    fill:white;
   }
   .navbar__menu_search_input{
     display: none;
@@ -51,17 +45,15 @@
   .navbar__tab_name{
     margin: 5px;
 }
-
   @media screen and (max-width: 800px) {
     .sidebar_wrapper{
         width: 80px;
     }
-    .navbar__menu_icon{
-       width: 25px;
-       height: 25px; 
-    }
     .navbar__tab_name{
         display: none;
+    }
+    .navbar__menu_option {
+      padding:0;
     }
     .navbar__menu_option:hover {
         width: 20px;
@@ -105,10 +97,6 @@
     }
     .navbar__menu_option{
         padding: 0;
-    }
-    .navbar__menu_icon{
-       width: 25px;
-       height: 25px; 
     }
     .navbar__menu_search_wrapper{
         position: fixed;

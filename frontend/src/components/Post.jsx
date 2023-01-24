@@ -169,6 +169,8 @@ const Post = ({ post, handleDelete }) => {
           />
         }
         title={post.user.username}
+        style={{ fontSize: "80%" }}
+        description={Date(post.created_at).slice(0, 16)}
       />
       <br />
       {picture()}

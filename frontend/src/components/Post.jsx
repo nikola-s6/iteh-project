@@ -17,10 +17,11 @@ const Post = ({ post }) => {
   const [commentNum, setCommentNum] = useState(0)
 
   const deleteButton = () => {
-    if (post.isUserPost(post.id, sessionStorage)) {
+    const userText = sessionStorage.getItem("logged_user")
+    const user = JSON.parse(userText)
+
+    if (user.id === post.user.id) {
       return <Button style={{ marginTop: "8px" }} type="link" icon={<DeleteOutlined />} />
-    } else {
-      return <></>
     }
   }
 
@@ -47,9 +48,10 @@ const Post = ({ post }) => {
           onClick={() => setModalOpen(true)}
           style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "5px" }}
         >
-          <MessageOutlined key="message" />,<p>{commentNum} comments</p>
+          <MessageOutlined key="message" />
+          <p>comments</p>
         </div>,
-        // deleteButton()
+        deleteButton(),
       ]}
     >
       <Modal
@@ -57,6 +59,7 @@ const Post = ({ post }) => {
         onRequestClose={() => setModalOpen(false)}
         shouldCloseOnEsc={true}
         shouldCloseOnOverlayClick={true}
+        appElement={document.getElementById("root")}
         style={{
           overlay: {
             backgroundColor: "rgba(0, 0, 0, 0.75)",

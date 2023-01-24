@@ -28,10 +28,10 @@ function UserPage() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <div className="header" style={{ marginTop: "2%" }}>
+      <div style={{ display: "block", justifyContent: "center" }}>
+        <div className="header" style={{ marginTop: "2%", marginRight: "25%", marginLeft: "35%" }}>
           <Card.Meta
-            style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "30%" }}
+            style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10%" }}
             avatar={<Avatar src={sessionStorage.getItem("profile_image")} style={{ width: "15vh", height: "15vh" }} />}
             title={user.username}
           />
@@ -62,12 +62,17 @@ function UserPage() {
         >
           <AddPostModal avatar={sessionStorage.getItem("profile_image")} username={"neko"} />
         </Modal>
+        <br />
+        <br />
+        <br />
+        <div style={{ marginRight: "25%", marginLeft: "35%" }}>
+          <PostList posts={posts}></PostList>
+        </div>
       </div>
       <div style={{ position: "absolute", top: 20, right: 15 }}>
         <button onClick={() => setModalOpen(true)} style={{ width: "20vh", height: "15vh" }} className="button">
           Add new post
         </button>
-        <PostList posts={posts}></PostList>
       </div>
     </div>
   )

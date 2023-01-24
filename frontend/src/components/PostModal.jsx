@@ -12,36 +12,19 @@ const PostModal = ({ post }) => {
     // handle submit
     setComment("")
   }
-  const [comments, setComments] = useState([])
-
-  useEffect(() => {
-    async function fetchData() {
-      console.log("usao")
-      var config = {
-        method: "get",
-        url: `http://127.0.0.1:8000/api/post/${post.id}/comments`,
-        headers: {
-          Authorization: "Bearer " + sessionStorage.getItem("auth_key"),
-        },
-      }
-      await axios(config)
-        .then(function (response) {
-          if (response.status == 200) {
-            setComments(response.data.data)
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
-      fetchData()
-    }
-  }, [comments])
 
   return (
     <div className="postModal">
       <div style={{ display: "block", width: "70%" }}>
         <div style={{ display: "flex", gap: "30px" }}>
-          <Card.Meta avatar={<Avatar src={sessionStorage.getItem("user_image")} />} />
+          <Card.Meta
+            avatar={
+              <img
+                src={`https://api.multiavatar.com/${post.user.username}.png`}
+                style={{ borderRadius: "50%", width: "30px", height: "30px" }}
+              />
+            }
+          />
           {post.user.username}
         </div>
         <br />
@@ -49,7 +32,7 @@ const PostModal = ({ post }) => {
       </div>
       <div style={{ borderLeft: "1px solid black", height: "100%" }} />
       <div className="comments">
-        <CommentList comments={comments} avatar={sessionStorage.getItem("user_image")} />
+        <CommentList comments={post.comments} />
         <div className="inputComment">
           <textarea
             value={comment}

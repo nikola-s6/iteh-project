@@ -37,7 +37,7 @@ const Login = (props) => {
           sessionStorage.setItem("auth_key", token)
           console.log(token)
           sessionStorage.setItem("logged_user", JSON.stringify(response.data.user))
-          let profilePictureAPI = "https://api.multiavatar.com/" + response.data.user["username"]
+          let profilePictureAPI = "https://api.multiavatar.com/" + response.data.user["username"] + ".png"
           sessionStorage.setItem("profile_image", profilePictureAPI)
           navigate("/")
         }

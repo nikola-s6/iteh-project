@@ -8,6 +8,7 @@ function Navbar({}) {
   if (location.pathname == "/register" || location.pathname == "/login") {
     return <></>
   }
+  const user = JSON.parse(sessionStorage.getItem("logged_user"))
   return (
     <div className="sidebar_wrapper">
       <div className="navbar__menu_icons">
@@ -23,7 +24,7 @@ function Navbar({}) {
           <p className="navbar__tab_name">Home</p>
         </Link>
 
-        <Link className="navbar__menu_option navbar__profile_icon" to={"/profile"}>
+        <Link className="navbar__menu_option navbar__profile_icon" to={`/profile/${user.id}`}>
           <svg width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="12" cy="8" r="5" />
             <path d="M3,21 h18 C 21,12 3,12 3,21" />

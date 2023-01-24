@@ -7,18 +7,19 @@ import axios from "axios"
 import PostList from "../../components/PostList"
 import { AiFillPlusCircle } from "react-icons/ai"
 import { IconContext } from "react-icons"
+import { useParams } from "react-router-dom"
 
 function UserPage() {
+  const { id } = useParams()
   const [modalOpen, setModalOpen] = useState(false)
   const [posts, setPosts] = useState([])
-
-  const userText = sessionStorage.getItem("logged_user")
-  const user = JSON.parse(userText)
-  // console.log(user)
+  const [user, setUser] = useState({})
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getPosts(user.id)
+      console.log(id)
+      const response = await getUser(id)
+      setUser(response.data.data)
       setPosts(response.data.data.posts)
       // console.log(response.data.data.posts)
     }
@@ -33,7 +34,13 @@ function UserPage() {
         </div>
       )
     }
-    return <></>
+    return (
+      <>
+        <h1 style={{ textAlign: "center", transform: "translate(3vw)", margnTop: "30px" }}>
+          This user does not have any posts
+        </h1>
+      </>
+    )
   }
 
   function appendPost(post) {
@@ -41,10 +48,7 @@ function UserPage() {
     list.unshift(post) //addin to first place
     setPosts(list)
   }
-  if (posts.length == 0) {
-    console.log("usao")
-    return <></>
-  }
+
   function closeModal() {
     setModalOpen(false)
   }
@@ -54,7 +58,14 @@ function UserPage() {
       <div style={{ display: "block", justifyContent: "center" }}>
         <div className="header" style={{ marginTop: "2%", marginRight: "25%", marginLeft: "35%" }}>
           <Card.Meta
-            style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "5%" }}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "5%",
+              flexDirection: "column",
+              fontSize: "2vw",
+            }}
             avatar={<Avatar src={sessionStorage.getItem("profile_image")} style={{ width: "15vh", height: "15vh" }} />}
             title={user.username}
           />
@@ -105,7 +116,7 @@ function UserPage() {
   )
 }
 
-async function getPosts(id) {
+async function getUser(id) {
   var config = {
     method: "get",
     url: "http://127.0.0.1:8000/api/user/" + id,

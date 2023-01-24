@@ -25,8 +25,11 @@ function AddPostModal({ user, appendPost, closeModal }) {
   async function handlePublish() {
     let data = new FormData()
     data.append("body", text)
-    // data.append("image", null)
-
+    if (selectedFile != null) {
+      data.append("image", selectedFile)
+    }
+    console.log(selectedFile)
+    // return
     await axios({
       url: "http://127.0.0.1:8000/api/post",
       method: "post",

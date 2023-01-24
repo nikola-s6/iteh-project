@@ -55,6 +55,15 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
+    public function showByUserName($username)
+    {
+        $user = User::get()->where('username', $username);
+        if (is_null($user)) {
+            return response()->json(['message' => 'user not found'], 404);
+        }
+        return new UserResource($user);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

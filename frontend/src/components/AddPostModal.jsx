@@ -1,11 +1,17 @@
 import { React, useState, useRef } from "react"
 import { Avatar, Button, Card } from "antd"
 import axios from "axios"
+import "./PostModal.css"
 
-function AddPostModal({ avatar, username }) {
+function AddPostModal({ user, appendPost, closeModal }) {
   const fileInputRef = useRef(null)
 
   const [selectedFile, setSelectedFile] = useState(null)
+  const [text, setText] = useState("")
+
+  const handleTextChange = (e) => {
+    setText(e.target.value)
+  }
 
   const handleButtonClick = () => {
     fileInputRef.current.click()
@@ -16,18 +22,34 @@ function AddPostModal({ avatar, username }) {
     console.log(selectedFile)
   }
 
-  function handlePublish() {
-    let formdata = new FormData()
-    formdata.append("image", selectedFile)
+  async function handlePublish() {
+    let data = new FormData()
+    data.append("body", text)
+    // data.append("image", null)
 
-    axios({
-      url: "",
-      method: "POST",
+    await axios({
+      url: "http://127.0.0.1:8000/api/post",
+      method: "post",
       headers: {
-        authorization: "token",
+        Authorization: "Bearer " + sessionStorage.getItem("auth_key"),
       },
-      data: formdata,
-    }).then((res) => {})
+      data: data,
+    })
+      .then((response) => {
+        if (response.status != 200) {
+          console.log(response)
+          return
+        }
+        console.log(response.data)
+        if (response.data.message != null && response.data.message == "new post added") {
+          // console.log(response.data.post)
+          appendPost(response.data.post)
+          closeModal()
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 
   return (
@@ -35,18 +57,31 @@ function AddPostModal({ avatar, username }) {
       <div className="header" style={{ marginTop: "2%" }}>
         <Card.Meta
           style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "5%" }}
-          avatar={<Avatar src={avatar} style={{ width: "10vh", height: "10vh" }} />}
-          title={username}
+          avatar={<Avatar src={sessionStorage.getItem("profile_image")} style={{ width: "10vh", height: "10vh" }} />}
+          title={user.username}
         />
         <br />
         <br />
       </div>
-      <textarea placeholder="Add some text" name="" id="" cols="155" rows="10"></textarea>
-      <br />
-      <br />
-      <button onClick={handleButtonClick} className="button">
-        Add picture
-      </button>
+      <div className="textAreaContainer">
+        <textarea
+          placeholder="Add some text"
+          name=""
+          id=""
+          cols="155"
+          rows="10"
+          onChange={handleTextChange}
+          className="textArea"
+        ></textarea>
+        <div className="twoButtons">
+          <button onClick={handleButtonClick} className="button">
+            Add picture
+          </button>
+          <button onClick={handlePublish} className="button">
+            Publish
+          </button>
+        </div>
+      </div>
       <input ref={fileInputRef} type="file" style={{ display: "none" }} onChange={handleFileChange} />
     </div>
   )

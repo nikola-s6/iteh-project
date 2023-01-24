@@ -5,6 +5,8 @@ import Modal from "react-modal"
 import AddPostModal from "../../components/AddPostModal"
 import axios from "axios"
 import PostList from "../../components/PostList"
+import { AiFillPlusCircle } from "react-icons/ai"
+import { IconContext } from "react-icons"
 
 function UserPage() {
   const [modalOpen, setModalOpen] = useState(false)
@@ -12,18 +14,39 @@ function UserPage() {
 
   const userText = sessionStorage.getItem("logged_user")
   const user = JSON.parse(userText)
+  // console.log(user)
 
   useEffect(() => {
     async function fetchData() {
       const response = await getPosts(user.id)
       setPosts(response.data.data.posts)
-      console.log(response.data.data.posts)
+      // console.log(response.data.data.posts)
     }
     fetchData()
   }, [])
 
+  const showPosts = () => {
+    if (posts.length != 0) {
+      return (
+        <div style={{ marginRight: "25%", marginLeft: "35%" }}>
+          <PostList posts={posts}></PostList>
+        </div>
+      )
+    }
+    return <></>
+  }
+
+  function appendPost(post) {
+    let list = posts
+    list.unshift(post) //addin to first place
+    setPosts(list)
+  }
   if (posts.length == 0) {
-    return <h1>loading</h1>
+    console.log("usao")
+    return <></>
+  }
+  function closeModal() {
+    setModalOpen(false)
   }
 
   return (
@@ -60,18 +83,22 @@ function UserPage() {
             },
           }}
         >
-          <AddPostModal avatar={sessionStorage.getItem("profile_image")} username={"neko"} />
+          <AddPostModal user={user} appendPost={appendPost} closeModal={closeModal} />
         </Modal>
         <br />
         <br />
         <br />
-        <div style={{ marginRight: "25%", marginLeft: "35%" }}>
-          <PostList posts={posts}></PostList>
-        </div>
+        {showPosts()}
       </div>
-      <div style={{ position: "absolute", top: 20, right: 15 }}>
-        <button onClick={() => setModalOpen(true)} style={{ width: "20vh", height: "15vh" }} className="button">
-          Add new post
+      <div style={{ position: "fixed", top: "90%", right: "3%" }}>
+        <button onClick={() => setModalOpen(true)}>
+          <IconContext.Provider
+            value={{ color: "rgba(163, 229, 190, 0.989)", size: "3vw", position: "absolute", top: "90%" }}
+          >
+            <div>
+              <AiFillPlusCircle></AiFillPlusCircle>
+            </div>
+          </IconContext.Provider>
         </button>
       </div>
     </div>

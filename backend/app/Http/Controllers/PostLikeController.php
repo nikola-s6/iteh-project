@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LikeResource;
+use App\Http\Resources\PostLikeResource;
 use App\Models\Like;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -11,8 +13,8 @@ class PostLikeController extends Controller
 {
     public function index($postID)
     {
-        $numberOfLikes = Like::where('postID', $postID)->count();
-        return response()->json(['message' => 'number of likes for post', 'count' => $numberOfLikes], 200);
+        $likes = Like::get()->where('postID', $postID);
+        return LikeResource::collection($likes);
     }
 
     public function store($postID)
@@ -24,9 +26,9 @@ class PostLikeController extends Controller
         $like = Like::create(['postID' => $postID, 'userID' => auth()->user()->id]);
         return response()->json(['message' => 'post liked'], 200);
     }
-    public function destroy($postID, $commentID)
+    public function destroy($postID, $userID)
     {
-        $like = Like::get()->where('postID', $postID)->where('id', $commentID)->first();
+        $like = Like::get()->where('postID', $postID)->where('userID', $userID)->first();
         if (is_null($like)) {
             return response()->json(['message', 'post not liked']);
         }

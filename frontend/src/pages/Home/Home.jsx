@@ -12,7 +12,6 @@ function Home() {
       const response = await getPosts()
       setPosts(response.data.data)
       console.log(response.data.data)
-      console.log(posts)
     }
     fetchData()
   }, [])

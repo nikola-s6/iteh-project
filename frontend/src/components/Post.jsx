@@ -1,4 +1,4 @@
-import { React, useState } from "react"
+import { React, useEffect, useState } from "react"
 import { Avatar, Button, Card } from "antd"
 import { HeartOutlined, MessageOutlined, DeleteOutlined } from "@ant-design/icons"
 import "./Post.css"
@@ -15,9 +15,32 @@ library.add(faHeartRegular, faHeartSolid)
 const Post = ({ post }) => {
   let navigate = useNavigate()
   const [modalOpen, setModalOpen] = useState(false)
-  const [liked, setLiked] = useState(false)
-  const [likeNum, setLikeNum] = useState(0)
-  const [commentNum, setCommentNum] = useState(0)
+  const [liked, setLiked] = useState(null)
+  const [likeNum, setLikeNum] = useState(post.likes.length)
+  const [likes, setLikes] = useState(post.likes)
+  const loggedUser = JSON.parse(sessionStorage.getItem("logged_user"))
+
+  useEffect(() => {
+    function check() {
+      var likers = []
+      var likersID = []
+      likes.forEach((element) => {
+        likers.push(element.user)
+        likersID.push(element.user.id)
+      })
+      if (likersID.includes(loggedUser.id)) {
+        setLiked(true)
+        console.log("sadrzi")
+      } else {
+        setLiked(false)
+      }
+    }
+    check()
+  }, [])
+
+  if (liked == null) {
+    return <></>
+  }
 
   const deleteButton = () => {
     const userText = sessionStorage.getItem("logged_user")
@@ -30,8 +53,8 @@ const Post = ({ post }) => {
 
   async function handleDelete() {
     var config = {
-      method: "delete",
-      url: `http://127.0.0.1:8000/api/post/${post.id}`,
+      method: "post",
+      url: "http://127.0.0.1:8000/api/post/21/likes",
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("auth_key"),
       },
@@ -39,11 +62,40 @@ const Post = ({ post }) => {
     const response = await axios(config)
   }
 
-  function handleLike() {
-    setLiked(!liked)
-    if (liked) setLikeNum(likeNum - 1)
-    else {
-      setLikeNum(likeNum + 1)
+  async function handleLike() {
+    if (!liked) {
+      //like
+      var config = {
+        method: "post",
+        url: `http://127.0.0.1:8000/api/post/${post.id}/likes`,
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("auth_key"),
+        },
+      }
+      var response = await axios(config)
+      if (response.data.message == "post liked") {
+        setLiked(true)
+        setLikeNum(likeNum + 1)
+      } else {
+        console.log(response)
+      }
+    } else {
+      //unlike
+      var config = {
+        method: "delete",
+        url: `http://127.0.0.1:8000/api/post/${post.id}/likes/` + loggedUser.id,
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("auth_key"),
+        },
+      }
+
+      var response = await axios(config)
+      if (response.data.message == "post unliked") {
+        setLiked(false)
+        setLikeNum(likeNum - 1)
+      } else {
+        console.log(response)
+      }
     }
   }
 

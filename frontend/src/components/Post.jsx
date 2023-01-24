@@ -103,7 +103,7 @@ const Post = ({ post }) => {
         avatar={
           <img
             src={`https://api.multiavatar.com/${post.user.username}.png`}
-            style={{ borderRadius: "50%", width: "30px", height: "30px" }}
+            style={{ borderRadius: "50%", width: "30px", height: "30px", cursor: "pointer" }}
             onClick={goToProfilePage}
           />
         }

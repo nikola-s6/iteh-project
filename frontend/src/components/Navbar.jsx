@@ -9,11 +9,13 @@ function Navbar({}) {
     return <></>
   }
   const user = JSON.parse(sessionStorage.getItem("logged_user"))
+  const avatar = sessionStorage.getItem("profile_image")
+
   return (
     <div className="sidebar_wrapper">
       <div className="navbar__menu_icons">
         <picture>
-          <img className="navbar__logo_image" src="../../public/images/logo.png" alt="site logo" />
+          <img className="navbar__logo_image" src={avatar} alt="site logo" />
           <img className="navbar__logo_image_small" src="../../public/images/instagram-pic.png" alt="site logo small" />
         </picture>
 
@@ -42,6 +44,11 @@ function Navbar({}) {
         </a>
         <input className="navbar__menu_search_input" type="text" placeholder="Search..." />
       </div>
+      <img
+        src="https://cdn.discordapp.com/attachments/1066401575700025348/1067496467486494770/logo-black.png"
+        style={{ width: "70%", marginLeft: "10%", marginTop: "75%", borderRadius: "50%" }}
+        alt="slika"
+      />
     </div>
   )
 }

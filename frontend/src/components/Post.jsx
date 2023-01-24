@@ -9,9 +9,11 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons"
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons"
+import { useNavigate } from "react-router-dom"
 library.add(faHeartRegular, faHeartSolid)
 
 const Post = ({ post }) => {
+  let navigate = useNavigate()
   const [modalOpen, setModalOpen] = useState(false)
   const [liked, setLiked] = useState(false)
   const [likeNum, setLikeNum] = useState(0)
@@ -43,6 +45,10 @@ const Post = ({ post }) => {
     else {
       setLikeNum(likeNum + 1)
     }
+  }
+
+  function goToProfilePage() {
+    navigate(`/profile/${post.user.id}`)
   }
 
   return (
@@ -98,6 +104,7 @@ const Post = ({ post }) => {
           <img
             src={`https://api.multiavatar.com/${post.user.username}.png`}
             style={{ borderRadius: "50%", width: "30px", height: "30px" }}
+            onClick={goToProfilePage}
           />
         }
         title={post.user.username}

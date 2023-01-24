@@ -18,7 +18,7 @@ class UserResource extends JsonResource
             'username' => $this->resource->username,
             'name' => $this->resource->username,
             'email' => $this->resource->email,
-            'posts' => PostSimpleResource::collection($posts),
+            'posts' => PostResource::collection($posts),
         ];
     }
 }

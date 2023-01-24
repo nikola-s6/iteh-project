@@ -1,16 +1,35 @@
 import "./Navbar.css"
 import { React, useState } from "react"
+import axios from "axios"
 import { Link, useLocation } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 function Navbar({}) {
   let location = useLocation()
   const [searchUser, setUser] = useState("")
+  let navigate = useNavigate()
   // console.log(location)
   if (location.pathname == "/register" || location.pathname == "/login") {
     return <></>
   }
   const user = JSON.parse(sessionStorage.getItem("logged_user"))
   const avatar = sessionStorage.getItem("profile_image")
+
+  async function logout(e) {
+    e.preventDefault()
+    var config = {
+      method: "post",
+      url: `http://127.0.0.1:8000/api/logout`,
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("auth_key"),
+      },
+    }
+    const response = await axios(config)
+    if (response.status == 200) {
+      sessionStorage.clear()
+      navigate("/login")
+    }
+  }
 
   function findUser() {}
 
@@ -48,7 +67,15 @@ function Navbar({}) {
         </a>
         <input className="navbar__menu_search_input" type="text" placeholder="Search..." />
       </div>
+
       <input style={{ width: "70%", marginLeft: "10%" }} type="text" onChange={(e) => setUser(e.target.value)} />
+      <br />
+      <br />
+      <button className="navbar__menu_option" onClick={(e) => logout(e)}>
+        <p className="navbar__tab_name">Logout</p>
+      </button>
+      <br />
+      <br />
       <img
         src="https://cdn.discordapp.com/attachments/1066401575700025348/1067496467486494770/logo-black.png"
         style={{ width: "70%", marginLeft: "10%", borderRadius: "50%" }}

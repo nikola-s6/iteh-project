@@ -5,24 +5,22 @@ import { HeartOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
 import UpdateComment from "./UpdateComment"
 import axios from "axios"
 
-function Comment({ comment }) {
+function Comment({ deleteComment, comment }) {
   const [modalOpen, setModalOpen] = useState(false)
-  const [commentText, setCommentText] = useState(comment.text)
 
   const updateButton = () => {
     const userText = sessionStorage.getItem("logged_user")
     const user = JSON.parse(userText)
     console.log(comment.user.id)
     if (user.id === comment.user.id) {
-      return <Button onClick={handleUpdate} type="link" icon={<EditOutlined />} />
+      return <Button onClick={() => setModalOpen(true)} type="link" icon={<EditOutlined />} />
     } else {
       return <></>
     }
   }
 
-  async function handleUpdate(e) {
-    e.preventDefault()
-
+  async function handleUpdate(commentText) {
+    console.log(commentText)
     var data = new FormData()
     data.append("text", commentText)
 
@@ -35,6 +33,7 @@ function Comment({ comment }) {
       data: data,
     }
     const response = await axios(config)
+    console.log(response)
   }
 
   const deleteButton = () => {
@@ -58,6 +57,9 @@ function Comment({ comment }) {
       },
     }
     const response = await axios(config)
+    if (response.data.message != null && response.data.message == "comment deleted") {
+      deleteComment(comment.id)
+    }
   }
 
   function date() {
@@ -109,7 +111,7 @@ function Comment({ comment }) {
               },
             }}
           >
-            <UpdateComment comment={comment} handleUpdate={setCommentText} />
+            <UpdateComment comment={comment} updateComment={handleUpdate} />
           </Modal>
           {deleteButton()}
         </div>

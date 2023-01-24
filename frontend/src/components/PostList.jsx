@@ -2,10 +2,10 @@ import React from "react"
 import Post from "./Post"
 
 function PostList({ posts }) {
-  function isUserPost(postCreator, userId) {
-    if (postCreator == userId) return true
-    return false
-  }
+  // function isUserPost(postCreator, userId) {
+  //   if (postCreator == userId) return true
+  //   return false
+  // }
 
   return (
     <section className="postlist">

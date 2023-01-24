@@ -1,0 +1,21 @@
+.textArea {
+  border: 3px double black;
+}
+
+.textAreaContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 100px;
+}
+
+.twoButtons {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.twoButtons .button {
+  margin-top: 15px;
+}

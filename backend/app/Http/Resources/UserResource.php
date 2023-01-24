@@ -11,7 +11,7 @@ class UserResource extends JsonResource
 
     public function toArray($request)
     {
-        $posts = Post::get()->where('userID', $this->resource->id);
+        $posts = Post::get()->where('userID', $this->resource->id)->sortByDesc('created_at');
 
         return [
             'id' => $this->resource->id,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Http\Resources\UserSimpleResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -57,11 +58,11 @@ class UserController extends Controller
 
     public function showByUserName($username)
     {
-        $user = User::get()->where('username', $username);
+        $user = User::get()->where('username', $username)->first();
         if (is_null($user)) {
-            return response()->json(['message' => 'user not found'], 404);
+            return response()->json(['message' => 'user does not exist'], 404);
         }
-        return new UserResource($user);
+        return new UserSimpleResource($user);
     }
 
     /**

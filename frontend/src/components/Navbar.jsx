@@ -37,17 +37,23 @@ function Navbar({}) {
   async function findUser(e) {
     e.preventDefault()
     var config = {
-      method: "post",
-      url: `http://127.0.0.1:8000/api/logout`,
+      method: "get",
+      url: `http://127.0.0.1:8000/api/user/username/${searchUser}`,
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("auth_key"),
       },
     }
-    const response = await axios(config)
-    if (response.status == 200) {
-      console.log(response.data)
-      //navigate(`/profile/${response.data}`)
-    }
+    console.log(searchUser)
+    axios(config)
+      .then(function (response) {
+        if (response.status == 200) {
+          console.log(searchUser)
+          navigate(`/profile/${response.data.data.id}`)
+        }
+      })
+      .catch(function (error) {
+        alert("User does not exist")
+      })
   }
 
   return (

@@ -24,7 +24,7 @@ function UserPage() {
       // console.log(response.data.data.posts)
     }
     fetchData()
-  }, [])
+  }, [id])
 
   if (sessionStorage.length == 0) {
     return <h1>Access denied! You have to log in first!</h1>
@@ -70,7 +70,12 @@ function UserPage() {
               flexDirection: "column",
               fontSize: "2vw",
             }}
-            avatar={<Avatar src={sessionStorage.getItem("profile_image")} style={{ width: "15vh", height: "15vh" }} />}
+            avatar={
+              <Avatar
+                src={`https://api.multiavatar.com/${user.username}.png`}
+                style={{ width: "15vh", height: "15vh" }}
+              />
+            }
             title={user.username}
           />
         </div>

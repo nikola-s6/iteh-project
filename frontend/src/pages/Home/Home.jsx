@@ -16,6 +16,10 @@ function Home() {
     fetchData()
   }, [])
 
+  if (sessionStorage.length == 0) {
+    return <h1>Access denied! You have to log in first!</h1>
+  }
+
   if (posts.length == 0) {
     return <h1>Ucitavanje</h1>
   }

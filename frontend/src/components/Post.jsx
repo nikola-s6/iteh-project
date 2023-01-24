@@ -30,7 +30,7 @@ const Post = ({ post, handleDelete }) => {
       })
       if (likersID.includes(loggedUser.id)) {
         setLiked(true)
-        console.log("sadrzi")
+        // console.log("sadrzi")
       } else {
         setLiked(false)
       }

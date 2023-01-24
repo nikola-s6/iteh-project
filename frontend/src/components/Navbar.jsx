@@ -12,6 +12,9 @@ function Navbar({}) {
   if (location.pathname == "/register" || location.pathname == "/login") {
     return <></>
   }
+  if (sessionStorage.length == 0) {
+    return <></>
+  }
   const user = JSON.parse(sessionStorage.getItem("logged_user"))
   const avatar = sessionStorage.getItem("profile_image")
 

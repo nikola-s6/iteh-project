@@ -19,6 +19,19 @@ const Post = ({ post }) => {
   const [likeNum, setLikeNum] = useState(0)
   const [commentNum, setCommentNum] = useState(0)
 
+  function picture() {
+    if (post.image === null) {
+      return <></>
+    } else {
+      return (
+        <img
+          style={{ width: "100%", borderRadius: "2%", border: "solid" }}
+          src={`http://127.0.0.1:8000${post.image.url}`}
+        ></img>
+      )
+    }
+  }
+
   const deleteButton = () => {
     const userText = sessionStorage.getItem("logged_user")
     const user = JSON.parse(userText)
@@ -108,8 +121,10 @@ const Post = ({ post }) => {
           />
         }
         title={post.user.username}
-        description={post.body}
       />
+      <br />
+      {picture()}
+      <Card.Meta description={post.body} />
     </Card>
   )
 }

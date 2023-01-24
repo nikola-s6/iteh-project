@@ -1,8 +1,13 @@
 import "./Navbar.css"
 import { React, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 function Navbar({}) {
+  let location = useLocation()
+  // console.log(location)
+  if (location.pathname == "/register" || location.pathname == "/login") {
+    return <></>
+  }
   return (
     <div className="sidebar_wrapper">
       <div className="navbar__menu_icons">

@@ -12,6 +12,7 @@ function Home() {
       const response = await getPosts()
       setPosts(response.data.data)
       console.log(response.data.data)
+      console.log(posts)
     }
     fetchData()
   }, [])
@@ -22,7 +23,7 @@ function Home() {
 
   return (
     <div className="posts">
-      <PostList posts={posts} showDelete={false} />
+      <PostList posts={posts} />
     </div>
   )
 }

@@ -78,7 +78,16 @@ const Post = ({ post }) => {
       >
         <PostModal post={post} />
       </Modal>
-      <Card.Meta avatar={<Avatar src={post.avatar} />} title={post.username} description={post.caption} />
+      <Card.Meta
+        avatar={
+          <img
+            src={`https://api.multiavatar.com/${post.user.username}.png`}
+            style={{ borderRadius: "50%", width: "30px", height: "30px" }}
+          />
+        }
+        title={post.user.username}
+        description={post.body}
+      />
     </Card>
   )
 }

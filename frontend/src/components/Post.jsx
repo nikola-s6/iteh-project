@@ -12,7 +12,7 @@ import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom"
 library.add(faHeartRegular, faHeartSolid)
 
-const Post = ({ post, handleDelete }) => {
+const Post = ({ deleteCommentFromPost, post, handleDelete }) => {
   let navigate = useNavigate()
   const [modalOpen, setModalOpen] = useState(false)
   const [liked, setLiked] = useState(null)
@@ -158,7 +158,7 @@ const Post = ({ post, handleDelete }) => {
           },
         }}
       >
-        <PostModal post={post} />
+        <PostModal deleteCommentFromPost={deleteCommentFromPost} post={post} />
       </Modal>
       <Card.Meta
         avatar={

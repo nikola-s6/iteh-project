@@ -4,7 +4,7 @@ import "./Post.css"
 import CommentList from "./CommentList"
 import axios from "axios"
 
-const PostModal = ({ post, appendComment }) => {
+const PostModal = ({ deleteCommentFromPost, post, appendComment }) => {
   const [comment, setComment] = useState("")
   const [allComments, setAllComments] = useState(post.comments)
 
@@ -45,15 +45,11 @@ const PostModal = ({ post, appendComment }) => {
   }
 
   function deleteComment(id) {
-    let c = allComments
-
-    c.forEach((element) => {
-      if (element.id === id) {
-        let index = c.indexOf(element)
-        c.splice(index, 1)
-      }
-    })
-    setAllComments(c)
+    let list = allComments.filter((comment) => comment.id != id)
+    setAllComments(list)
+    console.log(allComments)
+    console.log(post.comments)
+    deleteCommentFromPost(id, post.id)
   }
 
   function picture() {

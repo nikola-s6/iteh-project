@@ -7,12 +7,28 @@ function PostList({ posts, handleDelete }) {
   //   return false
   // }
 
+  function deleteCommentFromPost(idComment, idPost) {
+    posts.forEach((element) => {
+      if (element.id === idPost) {
+        let list = element.comments.filter((comment) => comment.id != idComment)
+        element.comments = list
+      }
+    })
+  }
+
   return (
     <section className="postlist">
       <div className="container">
         <div className="postlist-content grid">
           {posts.map((item) => {
-            return <Post post={item} key={item.id} handleDelete={handleDelete} />
+            return (
+              <Post
+                deleteCommentFromPost={deleteCommentFromPost}
+                post={item}
+                key={item.id}
+                handleDelete={handleDelete}
+              />
+            )
           })}
         </div>
       </div>

@@ -8,10 +8,10 @@ import axios from "axios"
 function Comment({ deleteComment, comment }) {
   const [modalOpen, setModalOpen] = useState(false)
 
+  const userText = sessionStorage.getItem("logged_user")
+  const user = JSON.parse(userText)
+
   const updateButton = () => {
-    const userText = sessionStorage.getItem("logged_user")
-    const user = JSON.parse(userText)
-    console.log(comment.user.id)
     if (user.id === comment.user.id) {
       return <Button onClick={() => setModalOpen(true)} type="link" icon={<EditOutlined />} />
     } else {
@@ -39,7 +39,6 @@ function Comment({ deleteComment, comment }) {
   const deleteButton = () => {
     const userText = sessionStorage.getItem("logged_user")
     const user = JSON.parse(userText)
-    console.log(comment.user.id)
     if (user.id === comment.user.id) {
       return <Button onClick={(e) => handleDelete(e)} type="link" icon={<DeleteOutlined />} />
     } else {

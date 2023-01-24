@@ -23,20 +23,7 @@ function UserPage() {
   }, [])
 
   if (posts.length == 0) {
-    return (
-      <>
-        <Card.Meta
-          style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "3%", fontSize: "2vw" }}
-          avatar={<Avatar src={sessionStorage.getItem("profile_image")} style={{ width: "15vh", height: "15vh" }} />}
-          title={user.username}
-        />
-        <div style={{ position: "absolute", top: 20, right: 15 }}>
-          <button onClick={() => setModalOpen(true)} style={{ width: "20vh", height: "15vh" }} className="button">
-            Add new post
-          </button>
-        </div>
-      </>
-    )
+    return <h1>loading</h1>
   }
 
   return (
@@ -44,7 +31,7 @@ function UserPage() {
       <div style={{ display: "block", justifyContent: "center" }}>
         <div className="header" style={{ marginTop: "2%", marginRight: "25%", marginLeft: "35%" }}>
           <Card.Meta
-            style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10%" }}
+            style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "5%" }}
             avatar={<Avatar src={sessionStorage.getItem("profile_image")} style={{ width: "15vh", height: "15vh" }} />}
             title={user.username}
           />
@@ -54,7 +41,6 @@ function UserPage() {
           onRequestClose={() => setModalOpen(false)}
           shouldCloseOnEsc={true}
           shouldCloseOnOverlayClick={true}
-          appElement={document.getElementById("root")}
           style={{
             overlay: {
               backgroundColor: "rgba(0, 0, 0, 0.75)",

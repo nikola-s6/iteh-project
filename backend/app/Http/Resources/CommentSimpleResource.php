@@ -24,6 +24,7 @@ class CommentSimpleResource extends JsonResource
             'text' => $this->resource->text,
             'user' => new UserSimpleResource($this->resource->commenter),
             'created_at' => $this->resource->created_at,
+            'post' => new PostSimpleResource($this->resource->post),
         ];
     }
 }

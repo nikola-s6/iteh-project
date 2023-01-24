@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::resource('/user', UserController::class)->only('index', 'show');
+    Route::get('/user/username/{username}', [UserController::class, 'showByUserName']);
     Route::resource('/post', PostController::class)->only('index', 'show', 'store', 'destroy');
     Route::resource('post.comments', PostCommentController::class)->only('index', 'show', 'store', 'update', 'destroy');
     Route::resource('post.likes', PostLikeController::class)->only('index', 'store', 'destroy');

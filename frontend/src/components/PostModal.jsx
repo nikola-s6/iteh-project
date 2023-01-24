@@ -13,7 +13,6 @@ const PostModal = ({ post, appendComment }) => {
 
     let data = new FormData()
     data.append("text", comment)
-    // data.append("image", null)
 
     await axios({
       url: `http://127.0.0.1:8000/api/post/${post.id}/comments`,
@@ -57,6 +56,19 @@ const PostModal = ({ post, appendComment }) => {
     setAllComments(c)
   }
 
+  function picture() {
+    if (post.image === null) {
+      return <></>
+    } else {
+      return (
+        <img
+          style={{ width: "100%", borderRadius: "2%", border: "solid" }}
+          src={`http://127.0.0.1:8000${post.image.url}`}
+        ></img>
+      )
+    }
+  }
+
   return (
     <div className="postModal">
       <div style={{ display: "block", width: "70%" }}>
@@ -73,6 +85,8 @@ const PostModal = ({ post, appendComment }) => {
         </div>
         <br />
         <div className="text">{post.body}</div>
+        <br />
+        {picture()}
       </div>
       <div style={{ borderLeft: "1px solid black", height: "100%" }} />
       <div className="comments">

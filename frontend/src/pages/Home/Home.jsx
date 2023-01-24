@@ -20,9 +20,28 @@ function Home() {
     return <h1>Ucitavanje</h1>
   }
 
+  function handleDelete(id) {
+    deletePost(id)
+    let list = posts.filter((post) => post.id != id)
+    setPosts(list)
+  }
+
+  async function deletePost(id) {
+    var config = {
+      method: "delete",
+      url: `http://127.0.0.1:8000/api/post/${id}`,
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("auth_key"),
+      },
+    }
+
+    const response = await axios(config)
+    return response
+  }
+
   return (
     <div className="posts">
-      <PostList posts={posts} />
+      <PostList posts={posts} handleDelete={handleDelete} />
     </div>
   )
 }

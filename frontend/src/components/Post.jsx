@@ -12,7 +12,7 @@ import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom"
 library.add(faHeartRegular, faHeartSolid)
 
-const Post = ({ post }) => {
+const Post = ({ post, handleDelete }) => {
   let navigate = useNavigate()
   const [modalOpen, setModalOpen] = useState(false)
   const [liked, setLiked] = useState(null)
@@ -60,19 +60,15 @@ const Post = ({ post }) => {
     const user = JSON.parse(userText)
 
     if (user.id === post.user.id) {
-      return <Button onClick={handleDelete} style={{ marginTop: "8px" }} type="link" icon={<DeleteOutlined />} />
+      return (
+        <Button
+          onClick={() => handleDelete(post.id)}
+          style={{ marginTop: "8px" }}
+          type="link"
+          icon={<DeleteOutlined />}
+        />
+      )
     }
-  }
-
-  async function handleDelete() {
-    var config = {
-      method: "post",
-      url: "http://127.0.0.1:8000/api/post/21/likes",
-      headers: {
-        Authorization: "Bearer " + sessionStorage.getItem("auth_key"),
-      },
-    }
-    const response = await axios(config)
   }
 
   async function handleLike() {

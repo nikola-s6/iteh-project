@@ -4,6 +4,7 @@ import { HeartOutlined, MessageOutlined, DeleteOutlined } from "@ant-design/icon
 import "./Post.css"
 import Modal from "react-modal"
 import PostModal from "./PostModal"
+import axios from "axios"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons"
@@ -21,8 +22,19 @@ const Post = ({ post }) => {
     const user = JSON.parse(userText)
 
     if (user.id === post.user.id) {
-      return <Button style={{ marginTop: "8px" }} type="link" icon={<DeleteOutlined />} />
+      return <Button onClick={handleDelete} style={{ marginTop: "8px" }} type="link" icon={<DeleteOutlined />} />
     }
+  }
+
+  async function handleDelete() {
+    var config = {
+      method: "delete",
+      url: `http://127.0.0.1:8000/api/post/${post.id}`,
+      headers: {
+        Authorization: "Bearer " + sessionStorage.getItem("auth_key"),
+      },
+    }
+    const response = await axios(config)
   }
 
   function handleLike() {

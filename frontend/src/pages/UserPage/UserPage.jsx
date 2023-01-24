@@ -41,6 +41,7 @@ function UserPage() {
           onRequestClose={() => setModalOpen(false)}
           shouldCloseOnEsc={true}
           shouldCloseOnOverlayClick={true}
+          appElement={document.getElementById("root")}
           style={{
             overlay: {
               backgroundColor: "rgba(0, 0, 0, 0.75)",

@@ -1,7 +1,9 @@
 import { React, useState } from "react"
 import { Avatar, Button, Card } from "antd"
 
-function UpdateComment({ comment, setCommentText }) {
+function UpdateComment({ comment, updateComment }) {
+  const [commentText, setCommentText] = useState("")
+
   return (
     <div>
       <Card.Meta
@@ -16,11 +18,13 @@ function UpdateComment({ comment, setCommentText }) {
       />
 
       <br />
-      <textarea onChange={(e) => setCommentText} rows="6" style={{ width: "100%", height: "100%" }}>
+      <textarea onChange={(e) => setCommentText(e.target.value)} rows="6" style={{ width: "100%", height: "100%" }}>
         {comment.text}
       </textarea>
       <br />
-      <button className="button">Update</button>
+      <button onClick={() => updateComment(commentText)} className="button">
+        Update
+      </button>
     </div>
   )
 }

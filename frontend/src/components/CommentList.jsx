@@ -1,12 +1,12 @@
-import React from "react"
+import React, { useState } from "react"
 import Comment from "./Comment"
 
-function CommentList({ comments }) {
+function CommentList({ deleteComment, comments }) {
   return (
     <div className="comment-list">
       {comments.map((comment) => (
         <>
-          <Comment key={comment.id} comment={comment} />
+          <Comment deleteComment={deleteComment} key={comment.id} comment={comment} />
           <br />
           <br />
         </>

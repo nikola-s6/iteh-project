@@ -51,6 +51,14 @@ const PostModal = ({ deleteCommentFromPost, post, appendComment }) => {
     console.log(post.comments)
     deleteCommentFromPost(id, post.id)
   }
+  function updateComment(id, text) {
+    let list = allComments
+    list.forEach((element) => {
+      if (element.id == id) {
+        element.text = text
+      }
+    })
+  }
 
   function picture() {
     if (post.image === null) {
@@ -86,7 +94,7 @@ const PostModal = ({ deleteCommentFromPost, post, appendComment }) => {
       </div>
       <div style={{ borderLeft: "1px solid black", height: "100%" }} />
       <div className="comments">
-        <CommentList deleteComment={deleteComment} comments={allComments} />
+        <CommentList deleteComment={deleteComment} comments={allComments} updateComment={updateComment} />
         <div className="inputComment">
           <textarea
             value={comment}

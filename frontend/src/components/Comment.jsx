@@ -4,8 +4,9 @@ import Modal from "react-modal"
 import { HeartOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons"
 import UpdateComment from "./UpdateComment"
 import axios from "axios"
+import qs from "qs"
 
-function Comment({ deleteComment, comment }) {
+function Comment({ deleteComment, comment, updateComment }) {
   const [modalOpen, setModalOpen] = useState(false)
 
   const userText = sessionStorage.getItem("logged_user")
@@ -20,20 +21,32 @@ function Comment({ deleteComment, comment }) {
   }
 
   async function handleUpdate(commentText) {
-    console.log(commentText)
-    var data = new FormData()
-    data.append("text", commentText)
+    if (commentText == "") {
+      return true
+    }
+    // var data = new FormData()
+    // data.append("text", commentText)
+
+    var data = qs.stringify({
+      text: commentText,
+    })
+
+    console.log(data)
 
     var config = {
       method: "put",
       url: `http://127.0.0.1:8000/api/post/${comment.post.id}/comments/${comment.id}`,
       headers: {
         Authorization: "Bearer " + sessionStorage.getItem("auth_key"),
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       data: data,
     }
     const response = await axios(config)
-    console.log(response)
+    if (response.data.message == "comment updated") {
+      setModalOpen(false)
+      updateComment(comment.id, commentText)
+    }
   }
 
   const deleteButton = () => {

@@ -41,7 +41,7 @@ class PostCommentController extends Controller
         if (is_null($post)) {
             return response()->json(['message' => 'post not found'], 404);
         }
-        $comment = Comment::find($commentID);
+        $comment = Comment::get()->where('postID', $postID)->where('id', $commentID)->first();
         if (is_null($comment)) {
             return response()->json(['message' => 'comment not found'], 404);
         }
